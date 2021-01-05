@@ -5,11 +5,11 @@ const app = express();
 
 app.use(morgan('common'));
 
-app.use('/documentation.html', express.static('public'));
+app.use(express.static('public'));
 
 let topMovies = [
   {
-    title: 'Harry Potter and the Prisoner of Azkaban ',
+    title: 'Harry Potter and the Prisoner of Azkaban',
     director: 'Alfonso Cuaron'
   },
   {
