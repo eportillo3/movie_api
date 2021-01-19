@@ -1,119 +1,155 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Documentation</title>
-  </head>
-  <body>
-    <header>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DOCUMENTATION</title>
+  <link rel="stylesheet" type="text/css" href="../css/styles.css">
+</head>
+
+<body>
+
+  <header>
     <h1>myFlix Project</h1>
     <h2>Create a REST API with Node.js</h2>
   </header>
-  <section>
+
+  <div>
     <h3>Objective:</h3>
     <p>To build the server-side component of a "movies" web application.</p>
-    <p>The web application will provide users with access to information about different
-      movies, directors, and genres.</p>
-      <p>Users will be able to sign up, update their personal information, and
-        create a list of their favorite movies.</p>
-  </section>
-  <section>
+    <p>The web application will provide users with access to information about different movies, directors, and genres.</p>
+    <p>Users will be able to sign up, update their personal information, and create a list of their favorite movies.</p>
+  </div>
+
+  <div>
+    <h3>Endpoint Documentation:</h3>
     <table>
       <tr>
         <th>Business Logic</th>
-        <th>URL Endpoint</th>
+        <th>URL (Endpoint)</th>
         <th>HTTP Method</th>
-        <th>Request Body</th>
+        <th>Query Parameters</th>
+        <th>Request Body Data Format</th>
         <th>Request Example</th>
-        <th>Response Body</th>
+        <th>Response Body Data Format</th>
         <th>Response Example</th>
       </tr>
       <tr>
-        <td>Get a list of all movies</td>
+        <td>Returns a list of all movies</td>
         <td>/movies</td>
         <td>GET</td>
         <td>None</td>
+        <td>None</td>
         <td>/movies</td>
         <td>JSON
-        <td>{<br>"Genre" : { <br>"Name" : "Crime Fiction",<br>"Description" : "Crime fiction is the genre of fiction that deals with crimes, their detection, criminals, and their motives."<br>},<br><br>"Director" : {<br>"Name" : "Martin Scorsese",<br>"Bio" : "Martin Charles Scorsese is an American film director, producer, screenwriter, and actor",<br>"Birth" : "1942",<br>"Death" : "-"<br>},<br><br>"_id" : "5b6c88930",<br><br>"Title" : "Casino",<br><br>
-          "Description" : "A tale of greed, deception, money, power, and murder occur between two best friends: a mafia enforcer and a casino executive, compete against each other over a gambling empire, and over a fast living and fast loving socialite.",<br><br>
-          "ImagePath" : "casino.png",<br><br>"Featured" : true<br>}</td>
+        <td>{<br>Genre: { <br>Name: Adventure,<br>Description: Adventure films are a genre of film whose plots feature elements of travel. They typically
+          involve protagonists who must leave their home or place of comfort and go to far away lands to fulfill a goal. Settings play an important
+          role in adventure films, sometimes as big as the characters themselves.<br>},<br><br>Director: {<br>Name: Gore Verbinski,<br>Bio: Gregor
+          Justin 'Gore' Verbinski is an American film director, screenwriter, producer, and musician. He is best known for directing The Ring, the Pirates
+          of the Caribbean films, and Rango.,<br>Birth: 3/15/1964,<br>Death: N/A<br>},<br><br>_id: "5b6c88930",<br><br>Title: Pirates of the Caribbean: The
+          Curse of the Black Pearl,<br><br>Description: Capt. Jack Sparrow (Johnny Depp) arrives at Port Royal in the Caribbean without a ship or crew. His
+          timing is inopportune, however, because later that evening the town is besieged by a pirate ship. The pirates kidnap the governor's daughter,
+          Elizabeth (Keira Knightley), who is in possession of a valuable coin that is linked to a curse that has transformed the pirates into the undead.
+          A gallant blacksmith (Orlando Bloom) in love with Elizabeth allies with Sparrow in pursuit of the pirates.,<br><br>ImagePath: "piratesofthecaribbeanblackpearl.jpg",
+          <br><br>Featured: false<br>}</td>
       </tr>
       <tr>
-        <td>Get information about one specific movie by title; use %20 for spaces</td>
+        <td>Returns data about a single movie by title</td>
         <td>/movies/:Title</td>
         <td>GET</td>
+        <td>Use "_" for spaces (when needed)</td>
         <td>None</td>
-        <td>/movies/Casino
+        <td>/movies/pirates_of_the_caribbean
         <td>JSON</td>
-        <td>{<br>"Genre" : { <br>"Name" : "Crime Fiction",<br>"Description" : "Crime fiction is the genre of fiction that deals with crimes, their detection, criminals, and their motives."<br>},<br><br>"Director" : {<br>"Name" : "Martin Scorsese",<br>"Bio" : "Martin Charles Scorsese is an American film director, producer, screenwriter, and actor",<br>"Birth" : "1942",<br>"Death" : "-"<br>},<br><br>"_id" : "5b6c88930",<br><br>"Title" : "Casino",<br><br>
-          "Description" : "A tale of greed, deception, money, power, and murder occur between two best friends: a mafia enforcer and a casino executive, compete against each other over a gambling empire, and over a fast living and fast loving socialite.",<br><br>
-          "ImagePath" : "casino.png",<br><br>"Featured" : true<br>}</td>
+        <td>{<br>Genre: { <br>Name: Adventure,<br>Description: Adventure films are a genre of film whose plots feature elements of travel. They typically
+          involve protagonists who must leave their home or place of comfort and go to far away lands to fulfill a goal. Settings play an important
+          role in adventure films, sometimes as big as the characters themselves.<br>},<br><br>Director: {<br>Name: Gore Verbinski,<br>Bio: Gregor
+          Justin 'Gore' Verbinski is an American film director, screenwriter, producer, and musician. He is best known for directing The Ring, the Pirates
+          of the Caribbean films, and Rango.,<br>Birth: 3/15/1964,<br>Death: N/A<br>},<br><br>_id: "5b6c88930",<br><br>Title: Pirates of the Caribbean: The
+          Curse of the Black Pearl,<br><br>Description: Capt. Jack Sparrow (Johnny Depp) arrives at Port Royal in the Caribbean without a ship or crew. His
+          timing is inopportune, however, because later that evening the town is besieged by a pirate ship. The pirates kidnap the governor's daughter,
+          Elizabeth (Keira Knightley), who is in possession of a valuable coin that is linked to a curse that has transformed the pirates into the undead.
+          A gallant blacksmith (Orlando Bloom) in love with Elizabeth allies with Sparrow in pursuit of the pirates.,<br><br>ImagePath: "piratesofthecaribbeanblackpearl.jpg",
+          <br><br>Featured: false<br>}</td>
       <tr>
-        <td>Return data about genre of a movie by its title, use %20 for spaces</td>
+        <td>Returns information about a genre by name/title</td>
         <td>/movies/Genres/:Title</td>
         <td>GET</td>
+        <td>Use "_" for spaces (when needed)</td>
         <td>None</td>
-        <td>/movies/Genres/Casino</td>
+        <td>/movies/Genres/lord_of_the_rings</td>
         <td>JSON</td>
-        <td>{<br>"Genre": "Crime Fiction",<br>"Description": "Crime fiction is the genre of fiction that deals with crimes, their detection, criminals, and their motives."<br>}</td>
+        <td>{<br>Fantasy. Description: Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic,
+          supernatural events, mythology, folklore, or exotic fantasy worlds. The genre is considered a form of speculative fiction alongside
+          science fiction films and horror films, although the genres do overlap.<br>}</td>
       </tr>
       <tr>
-        <td>Return data about a director by name; use %20 for spaces</td>
+        <td>Returns information about a director by name</td>
         <td>/movies/Directors/:Name</td>
         <td>GET</td>
+        <td>Use "_" for spaces (when needed)</td>
         <td>None</td>
-        <td>/movies/Directors/Martin%Scorsese</td>
+        <td>/movies/Directors/Peter_Jackson</td>
         <td>JSON</td>
-        <td>{<br>"Name": "Martin Scorsese.",<br>"Bio": "Martin Charles Scorsese is an American film director, producer, screenwriter, and actor.",<br>"Birth": "1942.",<br>"Death": "-"<br>}</td>
+        <td>{<br>Peter Jackson: Sir Peter Robert Jackson is a New Zealand film director, producer, and screenwriter.
+          He is best known as the director, writer, and producer of the Lord of the Rings trilogy and the Hobbit trilogy.<br>}</td>
       </tr>
       <tr>
-        <td>Allow new users to register</td>
+        <td>Allows new users to register</td>
         <td>/users</td>
         <td>POST</td>
+        <td>None</td>
         <td>JSON</td>
-        <td>{<br>"Username": "gregvincent",<br> "Password": "magic1475$",<br>"Email": "gregvincent47@gmail.com",<br>"Date of Birth": "06/14/1986"<br>}</td>
+        <td>{<br>Username: hnewcom,<br><br>Password: password1,<br><br>Email: hnewcom@hotmail.com,<br><br>Birthday: 06/02/1992<br>}</td>
         <td>JSON</td>
-        <td>{<br>"FavoriteMovies": [ ],<br>"_id": "5f85b4f19cf40f02a8c1e74c",<br>"Username": "gregvincent",<br> "Password": "magic1475$",<br>"Email": "gregvincent47@gmail.com",<br>"Birthdate": "1986-06-14T04:00:00.000Z",<br>"__v": 0<br>}</td>
+        <td>{<br>FavoriteMovies: [ ],<br>_id: 5feb2q494bb9238b023fg,<br>Username: hnewcom,<br><br>Password: password1,<br><br>Email: hnewcom@hotmail.com,<br><br>Birthday: 1992-06-02T04:00:00.000Z,<br>__v: 0<br>}</td>
       </tr>
       <tr>
-        <td>Allow users to update their user information</td>
-        <td>/users/:Username</td>
+        <td>Allows users to update their user information</td>
+        <td>/users/:username</td>
         <td>PUT</td>
+        <td>None</td>
         <td>JSON</td>
-        <td>{<br>"Username": "gregvincent",<br> "Password": "abracadabra2020",<br>"Email": "gregvincent47@gmail.com",<br>"Date of Birth": "06/14/1986"<br>}</td>
+        <td>{<br>Username: hnewcom,<br><br>Password: password12345,<br><br>Email: hnewcom@hotmail.com,<br><br>Birthday: 06/02/1992<br>}</td>
         <td>JSON</td>
-        <td>{<br>"FavoriteMovies": [ ],<br>"_id": "5f85b4f19cf40f02a8c1e74c",<br>"Username": "gregvincent",<br> "Password": "abracadabra2020",<br>"Email": "gregvincent47@gmail.com",<br>"Birthdate": "1986-06-14T04:00:00.000Z",<br>"__v": 0<br>}</td>
+        <td>{<br>FavoriteMovies: [ ],<br>_id: 5feb2q494bb9238b023fg,<br>Username: hnewcom,<br><br>Password: password12345,<br><br>Email: hnewcom@hotmail.com,<br><br>Birthday: 1992-06-02T04:00:00.000Z,<br>__v: 1<br>}</td>
       </tr>
       <tr>
-        <td>Allow users to add a movie to their list of favorites</td>
-        <td>/users/:Username/Movies/:MovieID</td>
+        <td>Allows users to add a movie to their list of favorites</td>
+        <td>/users/:username/movies/:movieID</td>
         <td>POST</td>
         <td>None</td>
-        <td>/users/gregvincent/Movies/5f8053202ba736251567996b</td>
         <td>JSON</td>
-        <td>{<br>    "FavoriteMovies": [<br>"5f8053202ba736251567996b"<br>],<br>"_id": "5f85b4f19cf40f02a8c1e74c",<br>"Username": "gregvincent",<br> "Password": "abracadabra2020",<br>"Email": "gregvincent47@gmail.com",<br>"Birthdate": "1986-06-14T04:00:00.000Z",<br>"__v": 0<br>}</td>
-      </tr>
-      <tr>
-        <td>Allow users to remove a movie from their list of favorites</td>
-        <td>/users/:Username/Movies/:MovieID</td>
-        <td>DELETE</td>
-        <td>None</td>
-        <td>/users/gregvincent/movies/5b6c88930</td>
-        <td>JSON
-        <td>{<br>"FavoriteMovies": [ ],<br>"_id": "5f85b4f19cf40f02a8c1e74c",<br>"Username": "gregvincent",<br> "Password": "abracadabra2020",<br>"Email": "gregvincent47@gmail.com",<br>"Birthdate": "1986-06-14T04:00:00.000Z",<br>"__v": 0<br>}</td>
-      </tr>
-      <tr>
-        <td>Allow existing users to deregister</td>
-        <td>/users/:Username</td>
-        <td>DELETE</td>
-        <td>None</td>
-        <td>/users/gregvincent</td>
+        <td>{<br>_id: 5feb583nd95g4977<br>}</td>
         <td>Message</td>
-        <td>"gregvincent was successfully deregistered from myFlix."</td>
+        <td>{<br>FavoriteMovies: [<br>5febsfq24305bwe035g7892,<br>5febsfq24305bwe035g7824,<br>5febsfq24305bwe035g9873,<br>5febsfq24305bwe035g783,
+          <br>5feb583nd95g4977<br>],<br><br>Username: hnewcom,<br> Password: password1,<br>Email: hnewcom@hotmail.com,<br>Birthday: 06/02/1992T00:00:00.000Z<br>}</td>
+      </tr>
+      <tr>
+        <td>Allows users to remove a movie from their list of favorites</td>
+        <td>/users/:username/movies/:movieID</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>None</td>
+        <td>/users/hnewcom/movies/5feb583nd95g4977</td>
+        <td>Message
+        <td>{<br>FavoriteMovies: [<br>5febsfq24305bwe035g7892,<br>5febsfq24305bwe035g7824,<br>5febsfq24305bwe035g9873,<br>5febsfq24305bwe035g783<br>],<br><br>Username: hnewcom,<br> Password: password1,<br>Email: hnewcom@hotmail.com,<br>Birthday: 06/02/1992T00:00:00.000Z<br>}</td>
+      </tr>
+      <tr>
+        <td>Allows existing users to deregister</td>
+        <td>/users/:username</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>None</td>
+        <td>/users/hnewcom</td>
+        <td>Message</td>
+        <td>hnewcom was deleted.</td>
       </tr>
     </table>
-  </section>
+  </div>
 
-  </body>
+</body>
+
 </html>
