@@ -1,5 +1,6 @@
 const express = require('express');
-morgan = require('morgan');
+  bodyParser = require('body-parser');
+  morgan = require('morgan');
 
 const app = express();
 const mongoose = require('mongoose');
@@ -14,8 +15,8 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB', {
 });
 
 app.use(morgan('common'));
-
 app.use(express.static('public'));
+app.use(bodyParser.json());
 
 
 // GET requests
@@ -124,7 +125,7 @@ app.get('/users', (req, res) => {
 // Get a user by username
 app.get('/users/:Username', (req, res) => {
   Users.findOne({
-      username: req.params.username
+      Username: req.params.Username
     })
     .then((user) => {
       res.json(user);
@@ -136,47 +137,40 @@ app.get('/users/:Username', (req, res) => {
 });
 
 // Put updates to user information
-app.put('/users/:username', (req, res) => {
-  Users.findOneAndUpdate({
-      Username: req.params.username
-    }, {
-      $set: {
-        username: req.body.username,
-        password: req.body.password,
-        email: req.body.email,
-        birthday: req.body.birthday
-      }
-    }, {
-      new: true
-    }, // This line makes sure that the updated document is returned
+app.put('/users/:Username', (req, res) => {
+    Users.findOneAndUpdate({Username: req.params.Username}, {$set:
+        {
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
+        }
+    },
+    {new: true},
     (err, updatedUser) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
-      } else {
-        res.json(updatedUser);
-      }
+        if(err) {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        } else {
+            res.status(201).json(updatedUser);
+        }
     });
 });
 
 // Allows users to add a movie to their list of favorites
-app.post('/users/:username/movies/:movieID', (req, res) => {
-  Users.findOneAndUpdate({
-      username: req.params.username
-    }, {
-      $push: {
-        favoriteMovies: req.params.movieID
-      }
-    }, {
-      new: true
-    }, // This line makes sure that the updated document is returned
+app.post('/users/:Username/Movies/:MovieID', (req, res) => {
+    Users.findOneAndUpdate(
+        {Username: req.params.Username},
+        {$push: {FavoriteMovies: req.params.MovieID}
+        },
+    {new: true},
     (err, updatedUser) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
-      } else {
-        res.json(updatedUser);
-      }
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        } else {
+            res.json(updatedUser);
+        }
     });
 });
 
@@ -202,20 +196,20 @@ app.delete('/users/:Username/Movies/:MovieID', (req, res) => {
 });
 
 // Deletes a user from registration database
-app.delete('/users/:username', (req, res) => {
-  Users.findOneAndRemove({
-      Username: req.params.Username
+app.delete('/users/:Username', (req, res) => {
+    Users.findOneAndRemove({
+        Username: req.params.Username
     })
     .then((user) => {
-      if (!user) {
-        res.status(400).send(req.params.Username + ' was not found.');
-      } else {
-        res.status(200).send(req.params.Username + ' was deleted.');
-      }
+        if(!user) {
+            res.status(400).send(req.params.Username + ' was not found.');
+        } else {
+            res.status(200).send(req.params.Username + ' was deleted.');
+        }
     })
     .catch((err) => {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
+        console.error(err);
+        res.status(500).send('Error: ' + err);
     });
 });
 
