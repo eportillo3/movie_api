@@ -2,7 +2,10 @@ const express = require('express');
 bodyParser = require('body-parser');
 morgan = require('morgan');
 
-const {check,validationResult} = require('express-validator');
+const {
+  check,
+  validationResult
+} = require('express-validator');
 
 const cors = require('cors');
 
@@ -124,7 +127,9 @@ app.post('/users', [
   let errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array()});
+    return res.status(422).json({
+      errors: errors.array()
+    });
   }
 
   let hashedPassword = Users.hashPassword(req.body.Password);
@@ -138,7 +143,7 @@ app.post('/users', [
         Users
           .create({
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday
           })
@@ -188,15 +193,32 @@ app.get('/users/:Username', passport.authenticate('jwt', {
 });
 
 // Put updates to user information
-app.put('/users/:Username', passport.authenticate('jwt', {
-  session: false
-}), (req, res) => {
+app.put('/users/:Username' [
+  check('Username', 'Username is required').isLength({
+    min: 5
+  }),
+  check('Username', 'Username contains non-alphanumeric characters — not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid.').isEmail()
+], (req, res) => {
+
+  // Checks validation object for errors
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      errors: errors.array()
+    });
+  }
+
+  let hashedPassword = Users.hashPassword(req.body.Password);
+
   Users.findOneAndUpdate({
       Username: req.params.Username
     }, {
       $set: {
         Username: req.body.Username,
-        Password: req.body.Password,
+        Password: hashedPassword,
         Email: req.body.Email,
         Birthday: req.body.Birthday
       }
@@ -282,6 +304,6 @@ app.delete('/users/:Username', passport.authenticate('jwt', {
 
 // listen for requests
 const port = process.env.PORT || 8080;
-app.listen(port, '0.0.0.0',() => {
- console.log('Listening on Port ' + port);
+app.listen(port, '0.0.0.0', () => {
+  console.log('Listening on Port ' + port);
 });
