@@ -196,7 +196,7 @@ app.get('/users/:Username', passport.authenticate('jwt', {
 });
 
 // Put updates to user information
-app.put('/users/:Username' [
+app.put('/users/:Username', [
   check('Username', 'Username is required').isLength({
     min: 5
   }),
