@@ -1,17 +1,43 @@
 const express = require('express');
-bodyParser = require('body-parser');
-morgan = require('morgan');
-mongoose = require('mongoose');
-Models = require('./models.js');
+  bodyParser = require('body-parser');
+  morgan = require('morgan');
+  mongoose = require('mongoose');
+  Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// });
+
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+const app = express();
+
+app.use(morgan('common'));
+
+app.use(express.static('public'));
+
+app.use(bodyParser.json());
+
+let auth = require('./auth')(app); //this line must be added after bodyParser function
+
+const passport = require('passport');
+require('./passport');
+
+const cors = require('cors');
+
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
 const {
   check,
   validationResult
 } = require('express-validator');
-
-const cors = require('cors');
-
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -24,42 +50,13 @@ app.use(cors({
   }
 }));
 
-const app = express();
-
-const Movies = Models.Movie;
-const Users = Models.User;
-
-const passport = require('passport');
-require('./passport');
-
-// mongoose.connect('mongodb://localhost:27017/myFlixDB', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// });
-
-mongoose.connect(process.env.CONNECTION_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-
-
-app.use(morgan('common'));
-app.use(express.static('public'));
-app.use(bodyParser.json());
-
-let auth = require('./auth')(app); //this line must be added after bodyParser function
-
 
 // GET requests
-app.get('/', passport.authenticate('jwt', {
-  session: false
-}), (req, res) => {
+app.get('/', (req, res) => {
   res.send('Welcome to myFlix');
 });
 
-app.get('/movies', passport.authenticate('jwt', {
-  session: false
-}), (req, res) => {
+app.get('/movies', (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
