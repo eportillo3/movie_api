@@ -51,8 +51,6 @@ const {
 //   }
 // }));
 
-app.use(cors());
-
 
 // GET requests
 app.get('/', (req, res) => {
