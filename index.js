@@ -54,7 +54,7 @@ const {
 
 // GET requests
 app.get('/', (req, res) => {
-  res.send('Welcome to myFlix');
+  res.send('Something Obvious! lol');
 });
 
 app.get('/movies', passport.authenticate('jwt', { 
